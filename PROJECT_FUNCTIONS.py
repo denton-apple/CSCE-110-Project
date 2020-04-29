@@ -125,7 +125,6 @@ main()
 def state_sales():
     '''This function plots the amount of car sales per state in 2019 on a bar chart'''
     
-    state_sale = {}
     states = pd.read_csv("2019_car_sale.csv")
     states_op = states[states.columns[3]].values
     states = states_op.tolist()
@@ -158,6 +157,7 @@ def state_sales():
             
     x_values = ["Texas", "California", "Florida", "Nevada", "Ohio"]
     y_values = [texas_sale, cal_sale, flor_sale, nevada_sale, ohio_sale]
+    plt.figure(1)
     plt.xlabel("State", fontsize=16)
     plt.ylabel("Amount of Sale($1 hundred million)", fontsize=16)
     plt.title("Amount of Sale in Different States", fontsize=18, color='b')
@@ -166,5 +166,72 @@ def state_sales():
     plt.ylim(ymax = 100000000, ymin = 0)
     plt.show()
     
+def month_sales():
+    '''This function plots the monthly sales of cars sold in 2019'''
+    
+    month = pd.read_csv("2019_car_sale.csv")
+    month_op = month[month.columns[1]].values
+    month = month_op.tolist()
+    #print(len(month))
+    sale = pd.read_csv("2019_car_sale.csv")
+    sale_op = sale[sale.columns[5]].values
+    sale = sale_op.tolist()
+    
+    for i in range(len(sale)):
+        sale[i] = sale[i].replace(",","")
+        sale[i] = int(sale[i])
+    #print(len(sale))
+    jan = 0
+    feb = 0
+    mar = 0
+    april = 0
+    may = 0
+    june = 0
+    july = 0
+    aug = 0
+    sept = 0
+    octo = 0
+    nov = 0
+    dec = 0
+    
+    for i in range(len(month) - 1):
+        if month[i][0] == '1':
+            if month[i][1] == "/":
+                jan += sale[i]
+            elif month[i][1] == "0":
+                octo += sale[i]
+            elif month[i][1] == "1":
+                nov += sale[i]
+            elif month[i][1] == "2":
+                dec += sale[i]
+        elif month[i][0] == '2':
+            feb += sale[i]
+        elif month[i][0] == '3':
+            mar += sale[i]
+        elif month[i][0] == '4':
+            april += sale[i]
+        elif month[i][0] == '5':
+            may += sale[i]
+        elif month[i][0] == '6':
+            june += sale[i]
+        elif month[i][0] == '7':
+            july += sale[i]
+        elif month[i][0] == '8':
+            aug += sale[i]
+        elif month[i][0] == '9':
+            sept += sale[i]
+            
+    x_values = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    y_values = [jan, feb, mar, april, may, june, july, aug, sept, octo, nov, dec]
+    plt.figure(2)
+    plt.xlabel("Month", fontsize=15)
+    plt.ylabel("Amount of Sale($)", fontsize=15)
+    plt.title("Amount of Sale in Diffferent Months of 2019", fontsize=17)
+    plt.plot(x_values, y_values, marker='o')
+    plt.text(2.5, 42000000, "April had\nhighest sales", fontsize=10, color='grey')
+    plt.ylim(ymax = 50000000, ymin = 0)
+    plt.show()
+    
+month_sales()
 state_sales()    
 data.close()
