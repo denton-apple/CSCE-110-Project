@@ -1,0 +1,231 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# opening files as lists
+amount = pd.read_csv("2019_car_sale.csv")
+amount_op = amount[amount.columns[5]].values
+amount = amount_op.tolist()
+
+dates = pd.read_csv('2019_car_sale.csv')
+dates_op = dates[dates.columns[1]].values
+dates = dates_op.tolist()
+
+for i in range(len(amount)):
+    amount[i] = int(amount[i].replace(',',''))
+
+# defining sales variables
+jan_sales = 0
+feb_sales = 0
+mar_sales = 0
+apr_sales = 0
+may_sales = 0
+jun_sales = 0
+jul_sales = 0
+aug_sales = 0
+sep_sales = 0
+oct_sales = 0
+nov_sales = 0
+dec_sales = 0
+
+# determining the month and adding the sales to the corresponding month
+for i in range(len(dates)):
+    if int(dates[i].split('/')[0]) == 1:
+        jan_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 2:
+        feb_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 3:
+        mar_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 4:
+        apr_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 5:
+        may_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 6:
+        jun_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 7:
+        jul_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 8:
+        aug_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 9:
+        sep_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 10:
+        oct_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 11:
+        nov_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 12:
+        dec_sales += amount[i]
+
+# plotting the graph
+x_values = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'Decemeber']
+y_values = [jan_sales, feb_sales, mar_sales, apr_sales, may_sales, jun_sales, jul_sales, aug_sales, sep_sales, oct_sales, nov_sales, dec_sales]
+plt.figure(2)
+plt.xlabel('Month')
+plt.ylabel('Sales ($)')
+plt.title('Amount of Sales per Month')
+plt.plot(x_values, y_values, marker='o')
+plt.show()
+
+
+---------------------------------------------------------------------------------------------
+
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# opening files as lists
+amount = pd.read_csv("2019_car_sale.csv")
+amount_op = amount[amount.columns[5]].values
+amount = amount_op.tolist()
+
+dates = pd.read_csv('2019_car_sale.csv')
+dates_op = dates[dates.columns[1]].values
+dates = dates_op.tolist()
+
+for i in range(len(amount)):
+    amount[i] = int(amount[i].replace(',',''))
+
+# defining sales variables
+jan_sales = 0
+feb_sales = 0
+mar_sales = 0
+apr_sales = 0
+may_sales = 0
+jun_sales = 0
+jul_sales = 0
+aug_sales = 0
+sep_sales = 0
+oct_sales = 0
+nov_sales = 0
+dec_sales = 0
+
+# determining the month and adding the sales to the corresponding month
+for i in range(len(dates)):
+    if int(dates[i].split('/')[0]) == 1:
+        jan_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 2:
+        feb_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 3:
+        mar_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 4:
+        apr_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 5:
+        may_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 6:
+        jun_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 7:
+        jul_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 8:
+        aug_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 9:
+        sep_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 10:
+        oct_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 11:
+        nov_sales += amount[i]
+    elif int(dates[i].split('/')[0]) == 12:
+        dec_sales += amount[i]
+
+# plotting the graph
+x_values = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'Decemeber']
+y_values = [jan_sales, feb_sales, mar_sales, apr_sales, may_sales, jun_sales, jul_sales, aug_sales, sep_sales, oct_sales, nov_sales, dec_sales]
+plt.figure(2)
+plt.xlabel('Month')
+plt.ylabel('Sales ($)')
+plt.title('Amount of Sales per Month')
+plt.plot(x_values, y_values, marker='o')
+plt.show()
+
+
+
+---------------------------------------------------------------------------------------------
+
+
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# opening the files
+amount = pd.read_csv("2019_car_sale.csv")
+amount_op = amount[amount.columns[5]].values
+amount = amount_op.tolist()
+
+dates = pd.read_csv('2019_car_sale.csv')
+dates_op = dates[dates.columns[1]].values
+dates = dates_op.tolist()
+
+states = pd.read_csv('2019_car_sale.csv')
+states_op = states[states.columns[3]].values
+states = states_op.tolist()
+
+
+for i in range(len(amount)):
+    amount[i] = int(amount[i].replace(',',''))
+
+state_list = ['Texas', 'California', 'Florida', 'Ohio', 'Nevada']
+
+# iterating through each state and only adding the sales for those states.
+# Once that is done, it prints the graph for that state and restarts with the next state
+for state in state_list:
+    jan_sales = 0
+    feb_sales = 0
+    mar_sales = 0
+    apr_sales = 0
+    may_sales = 0
+    jun_sales = 0
+    jul_sales = 0
+    aug_sales = 0
+    sep_sales = 0
+    oct_sales = 0
+    nov_sales = 0
+    dec_sales = 0
+    for i in range(len(dates)):
+        if states[i] == state:
+            if int(dates[i].split('/')[0]) == 1:
+                jan_sales += amount[i]
+            elif int(dates[i].split('/')[0]) == 2:
+                feb_sales += amount[i]
+            elif int(dates[i].split('/')[0]) == 3:
+                mar_sales += amount[i]
+            elif int(dates[i].split('/')[0]) == 4:
+                apr_sales += amount[i]
+            elif int(dates[i].split('/')[0]) == 5:
+                may_sales += amount[i]
+            elif int(dates[i].split('/')[0]) == 6:
+                jun_sales += amount[i]
+            elif int(dates[i].split('/')[0]) == 7:
+                jul_sales += amount[i]
+            elif int(dates[i].split('/')[0]) == 8:
+                aug_sales += amount[i]
+            elif int(dates[i].split('/')[0]) == 9:
+                sep_sales += amount[i]
+            elif int(dates[i].split('/')[0]) == 10:
+                oct_sales += amount[i]
+            elif int(dates[i].split('/')[0]) == 11:
+                nov_sales += amount[i]
+            elif int(dates[i].split('/')[0]) == 12:
+                dec_sales += amount[i]
+        else:
+            continue
+
+    # printing the graph for the current state
+    x_values = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+                    'November', 'Decemeber']
+    y_values = [jan_sales, feb_sales, mar_sales, apr_sales, may_sales, jun_sales, jul_sales, aug_sales, sep_sales,
+                    oct_sales, nov_sales, dec_sales]
+    plt.figure(3, figsize=(11,6))
+    plt.xlabel('Month')
+    plt.ylabel('Sales ($)')
+    plt.title('Amount of Sales per Month per State')
+    plt.plot(x_values, y_values, label=state)
+
+# showing the entire graph
+plt.legend(state_list)
+plt.show()
+
+
+
+
+
+
+
+
+
