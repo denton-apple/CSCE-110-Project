@@ -5,7 +5,7 @@
 # E-mail: denton_apple@tamu.edu, pskimball1@tamu.edu, erinellis@tamu.edu
 # Description: Program reads from a CSV file and outputs information and graphs regarding the dealerships and their data.
 
-pdoc --html \Users\erinellis\Desktop\Spring 2020\CSCE 110\Project\project_functions.py
+pdoc --html /Users/erinellis/Desktop/Spring 2020/CSCE 110/Project/project_functions.py
 
 import pip
 import csv
