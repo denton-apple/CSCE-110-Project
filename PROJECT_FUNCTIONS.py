@@ -3,17 +3,21 @@
 # Date: 04/026/2020
 # Section: 504
 # E-mail: denton_apple@tamu.edu, pskimball1@tamu.edu, erinellis@tamu.edu
-# Description:
+# Description: This program reads a csv file of car sales in 5 different states
+# sold in 2019. It performs operations on the file to find the total number
+# of deals, models, brands, colors, total sale, etc. This program also 
+# plots 4 different plots for data visualization, showing monthly sales, 
+# sales in different states, and sales by brand. 
 
-import pip
 import csv
 import matplotlib.pyplot as plt
 import pandas as pd
+import pip
 
 data = open("2019_car_sale.csv")
 
 def car_deals():
-    '''This function calculates the total number of car salesin 2019'''
+    '''This function calculates the total number of car sales in 2019'''
     
     num_deals = 0
     models_list = []
@@ -120,8 +124,6 @@ def main():
     print(f"Total amount of sale: ${sales()}")
     print()
     print("*******************************************************************")
-    
-main()
 
 def state_sales():
     '''This function plots the amount of car sales per state in 2019 on a bar chart'''
@@ -233,6 +235,146 @@ def month_sales():
     plt.ylim(ymax = 50000000, ymin = 0)
     plt.show()
     
-month_sales()
-state_sales()    
+def brand_sales():
+    '''This function plots the percentage of car sales in 2019 based off of 
+    different car brands'''
+    
+    # opening the files
+    amount = pd.read_csv("2019_car_sale.csv")
+    amount_op = amount[amount.columns[5]].values
+    amount = amount_op.tolist()
+    
+    brand = pd.read_csv('2019_car_sale.csv')
+    brand_op = brand[brand.columns[2]].values
+    brand = brand_op.tolist()
+    
+    for i in range(len(amount)):
+        amount[i] = int(amount[i].replace(',',''))
+    
+    # creating a dictionary for the brands and their sales
+    brand_sale_dict = {}
+    final_brand_sale_dict = {'Other': 0}
+    total_sales = 0
+    
+    # adding each brand and their sales to the dictionary
+    for i in range(len(brand)):
+        if brand[i] in brand_sale_dict:
+            brand_sale_dict[brand[i]] += amount[i]
+        else:
+            brand_sale_dict[brand[i]] = amount[i]
+        total_sales += amount[i]
+    
+    # finding the brands with < 4% of the total and grouping them into Other
+    for brand, sale in brand_sale_dict.items():
+        if sale / total_sales < .04:
+            final_brand_sale_dict['Other'] += sale
+        else:
+            final_brand_sale_dict[brand] = sale
+    
+    # sorting the final dictionary for nice graphs
+    sorted_final_sales = sorted(((val, key) for (key, val) in final_brand_sale_dict.items()), reverse=True)
+    #print(sorted_final_sales)
+    
+    
+    # printing the graph
+    labels = [car[1] for car in sorted_final_sales]
+    sizes = [car[0] for car in sorted_final_sales]
+    plt.figure(3)
+    plt.title('Percentage of sale by different car brands')
+    plt.pie(sizes, labels=labels, autopct='%1.1f%%')
+    plt.show()
+    
+def state_sales_lines():
+    '''This function plots the sales amount in different states as individual
+    lines on a line graph'''
+    
+    # opening the files
+    amount = pd.read_csv("2019_car_sale.csv")
+    amount_op = amount[amount.columns[5]].values
+    amount = amount_op.tolist()
+    
+    dates = pd.read_csv('2019_car_sale.csv')
+    dates_op = dates[dates.columns[1]].values
+    dates = dates_op.tolist()
+    
+    states = pd.read_csv('2019_car_sale.csv')
+    states_op = states[states.columns[3]].values
+    states = states_op.tolist()
+    
+    
+    for i in range(len(amount)):
+        amount[i] = int(amount[i].replace(',',''))
+    
+    state_list = ['Texas', 'California', 'Florida', 'Ohio', 'Nevada']
+    
+    # iterating through each state and only adding the sales for those states.
+    # Once that is done, it prints the graph for that state and restarts with the next state
+    for state in state_list:
+        jan_sales = 0
+        feb_sales = 0
+        mar_sales = 0
+        apr_sales = 0
+        may_sales = 0
+        jun_sales = 0
+        jul_sales = 0
+        aug_sales = 0
+        sep_sales = 0
+        oct_sales = 0
+        nov_sales = 0
+        dec_sales = 0
+        for i in range(len(dates)):
+            if states[i] == state:
+                if int(dates[i].split('/')[0]) == 1:
+                    jan_sales += amount[i]
+                elif int(dates[i].split('/')[0]) == 2:
+                    feb_sales += amount[i]
+                elif int(dates[i].split('/')[0]) == 3:
+                    mar_sales += amount[i]
+                elif int(dates[i].split('/')[0]) == 4:
+                    apr_sales += amount[i]
+                elif int(dates[i].split('/')[0]) == 5:
+                    may_sales += amount[i]
+                elif int(dates[i].split('/')[0]) == 6:
+                    jun_sales += amount[i]
+                elif int(dates[i].split('/')[0]) == 7:
+                    jul_sales += amount[i]
+                elif int(dates[i].split('/')[0]) == 8:
+                    aug_sales += amount[i]
+                elif int(dates[i].split('/')[0]) == 9:
+                    sep_sales += amount[i]
+                elif int(dates[i].split('/')[0]) == 10:
+                    oct_sales += amount[i]
+                elif int(dates[i].split('/')[0]) == 11:
+                    nov_sales += amount[i]
+                elif int(dates[i].split('/')[0]) == 12:
+                    dec_sales += amount[i]
+            else:
+                continue
+    
+        # printing the graph for the current state
+        x_values = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+                        'November', 'Decemeber']
+        y_values = [jan_sales, feb_sales, mar_sales, apr_sales, may_sales, jun_sales, jul_sales, aug_sales, sep_sales,
+                        oct_sales, nov_sales, dec_sales]
+        plt.figure(4, figsize=(11,6))
+        plt.xlabel('Month')
+        plt.ylabel('Sales ($)')
+        plt.title('Amount of Sales per Month per State')
+        plt.plot(x_values, y_values, label=state)
+    
+    # showing the entire graph
+    plt.legend(state_list)
+    plt.show()    
+
+def main_plots():
+    '''This function is the driver of all of the graphs created for data 
+    visualization'''
+    
+    state_sales_lines()
+    brand_sales()
+    month_sales()
+    state_sales()
+
+main()
+main_plots()
 data.close()
