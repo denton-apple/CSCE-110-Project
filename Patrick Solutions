@@ -71,68 +71,51 @@ plt.show()
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# opening files as lists
+# opening the files
 amount = pd.read_csv("2019_car_sale.csv")
 amount_op = amount[amount.columns[5]].values
 amount = amount_op.tolist()
 
-dates = pd.read_csv('2019_car_sale.csv')
-dates_op = dates[dates.columns[1]].values
-dates = dates_op.tolist()
+brand = pd.read_csv('2019_car_sale.csv')
+brand_op = brand[brand.columns[2]].values
+brand = brand_op.tolist()
 
 for i in range(len(amount)):
     amount[i] = int(amount[i].replace(',',''))
 
-# defining sales variables
-jan_sales = 0
-feb_sales = 0
-mar_sales = 0
-apr_sales = 0
-may_sales = 0
-jun_sales = 0
-jul_sales = 0
-aug_sales = 0
-sep_sales = 0
-oct_sales = 0
-nov_sales = 0
-dec_sales = 0
+# creating a dictionary for the brands and their sales
+brand_sale_dict = {}
+final_brand_sale_dict = {'Other': 0}
+total_sales = 0
 
-# determining the month and adding the sales to the corresponding month
-for i in range(len(dates)):
-    if int(dates[i].split('/')[0]) == 1:
-        jan_sales += amount[i]
-    elif int(dates[i].split('/')[0]) == 2:
-        feb_sales += amount[i]
-    elif int(dates[i].split('/')[0]) == 3:
-        mar_sales += amount[i]
-    elif int(dates[i].split('/')[0]) == 4:
-        apr_sales += amount[i]
-    elif int(dates[i].split('/')[0]) == 5:
-        may_sales += amount[i]
-    elif int(dates[i].split('/')[0]) == 6:
-        jun_sales += amount[i]
-    elif int(dates[i].split('/')[0]) == 7:
-        jul_sales += amount[i]
-    elif int(dates[i].split('/')[0]) == 8:
-        aug_sales += amount[i]
-    elif int(dates[i].split('/')[0]) == 9:
-        sep_sales += amount[i]
-    elif int(dates[i].split('/')[0]) == 10:
-        oct_sales += amount[i]
-    elif int(dates[i].split('/')[0]) == 11:
-        nov_sales += amount[i]
-    elif int(dates[i].split('/')[0]) == 12:
-        dec_sales += amount[i]
+# adding each brand and their sales to the dictionary
+for i in range(len(brand)):
+    if brand[i] in brand_sale_dict:
+        brand_sale_dict[brand[i]] += amount[i]
+    else:
+        brand_sale_dict[brand[i]] = amount[i]
+    total_sales += amount[i]
 
-# plotting the graph
-x_values = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'Decemeber']
-y_values = [jan_sales, feb_sales, mar_sales, apr_sales, may_sales, jun_sales, jul_sales, aug_sales, sep_sales, oct_sales, nov_sales, dec_sales]
-plt.figure(2)
-plt.xlabel('Month')
-plt.ylabel('Sales ($)')
-plt.title('Amount of Sales per Month')
-plt.plot(x_values, y_values, marker='o')
+# finding the brands with < 4% of the total and grouping them into Other
+for brand, sale in brand_sale_dict.items():
+    if sale / total_sales < .04:
+        final_brand_sale_dict['Other'] += sale
+    else:
+        final_brand_sale_dict[brand] = sale
+
+# sorting the final dictionary for nice graphs
+sorted_final_sales = sorted(((val, key) for (key, val) in final_brand_sale_dict.items()), reverse=True)
+print(sorted_final_sales)
+
+
+# printing the graph
+labels = [car[1] for car in sorted_final_sales]
+sizes = [car[0] for car in sorted_final_sales]
+plt.figure(3)
+plt.title('Percentage of sale by different car brands')
+plt.pie(sizes, labels=labels, autopct='%1.1f%%')
 plt.show()
+
 
 
 
