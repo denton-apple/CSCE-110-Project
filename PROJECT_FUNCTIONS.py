@@ -5,6 +5,7 @@
 # E-mail: denton_apple@tamu.edu, pskimball1@tamu.edu, erinellis@tamu.edu
 # Description:
 
+import pip
 import csv
 import matplotlib.pyplot as plt
 import pandas as pd
