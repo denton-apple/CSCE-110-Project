@@ -2,7 +2,7 @@
 # Author: Denton Apple, Erin Ellis, Patrick Kimball
 # Date: 04/026/2020
 # Section: 504
-# E-mail: denton_apple@tamu.edu, pskimball1@tamu.edu
+# E-mail: denton_apple@tamu.edu, pskimball1@tamu.edu, erinellis@tamu.edu
 # Description:
 
 import csv
