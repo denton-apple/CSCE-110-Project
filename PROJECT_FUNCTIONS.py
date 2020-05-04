@@ -12,6 +12,7 @@
 import csv
 import matplotlib.pyplot as plt
 import pandas as pd
+import pip
 
 data = open("2019_car_sale.csv")
 
@@ -122,7 +123,7 @@ def main():
     print(f"The number of different car colors: {colors()}")
     print(f"Total amount of sale: ${sales()}")
     print()
-    print("*******************************************************************")
+    print("*******************************************************************", "\n")
 
 def state_sales():
     '''This function plots the amount of car sales per state in 2019 on a bar chart'''
@@ -167,6 +168,8 @@ def state_sales():
     plt.text(1.5, 85000000, "Florida had\nhighest sales", color='grey', fontsize=10)
     plt.ylim(ymax = 100000000, ymin = 0)
     plt.show()
+    
+    print(f"Florida sold the most number of cars ({flor_sale})")
     
 def month_sales():
     '''This function plots the monthly sales of cars sold in 2019'''
@@ -234,6 +237,10 @@ def month_sales():
     plt.ylim(ymax = 50000000, ymin = 0)
     plt.show()
     
+    print(f"The most amount of sale (${april}) was in April")
+    print()
+    print("*******************************************************************", "\n")
+    
 def brand_sales():
     '''This function plots the percentage of car sales in 2019 based off of 
     different car brands'''
@@ -262,7 +269,7 @@ def brand_sales():
         else:
             brand_sale_dict[brand[i]] = amount[i]
         total_sales += amount[i]
-    
+
     # finding the brands with < 4% of the total and grouping them into Other
     for brand, sale in brand_sale_dict.items():
         if sale / total_sales < .04:
@@ -272,8 +279,6 @@ def brand_sales():
     
     # sorting the final dictionary for nice graphs
     sorted_final_sales = sorted(((val, key) for (key, val) in final_brand_sale_dict.items()), reverse=True)
-    #print(sorted_final_sales)
-    
     
     # printing the graph
     labels = [car[1] for car in sorted_final_sales]
@@ -282,6 +287,20 @@ def brand_sales():
     plt.title('Percentage of sale by different car brands')
     plt.pie(sizes, labels=labels, autopct='%1.1f%%')
     plt.show()
+    
+    print("************** Amount of sale based on car brands *****************", "\n")
+    print("Other : 36.2%")
+    print("Chevrolet : 10.1%")
+    print("Toyota : 9.3%")
+    print("Ford : 9.1%")
+    print("Nissan : 5.9%")
+    print("Honda : 5.6%")
+    print("GMC : 5.5%")
+    print("Mazda : 5.0%")
+    print("Hyundai : 4.7%")
+    print("Kia : 4.4%")
+    print("Dodge : 4.1%", "\n")
+    print("*******************************************************************")
     
 def state_sales_lines():
     '''This function plots the sales amount in different states as individual
@@ -363,16 +382,16 @@ def state_sales_lines():
     
     # showing the entire graph
     plt.legend(state_list)
-    plt.show()    
+    plt.show()
 
 def main_plots():
     '''This function is the driver of all of the graphs created for data 
     visualization'''
     
     state_sales_lines()
-    brand_sales()
-    month_sales()
     state_sales()
+    month_sales()
+    brand_sales()
 
 main()
 main_plots()
