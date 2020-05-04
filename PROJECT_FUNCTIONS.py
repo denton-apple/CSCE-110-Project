@@ -12,7 +12,6 @@
 import csv
 import matplotlib.pyplot as plt
 import pandas as pd
-import pip
 
 data = open("2019_car_sale.csv")
 
